@@ -1,0 +1,25 @@
+name: Mark stale issues and pull requests
+
+on:
+  schedule:
+    - cron: '00 21 * * *' 
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+
+    steps:
+    - uses: actions/stale@v5
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        stale-issue-message: '⚠️ This issue is stale because it has been inactive. Please respond or it will be closed soon.'
+        stale-pr-message: '⚠️ This pull request is stale because it has been inactive. Please respond or it will be closed soon.'
+        stale-issue-label: 'no-issue-activity'
+        stale-pr-label: 'no-pr-activity'
+        
+        # Valores mínimos posibles para "stale" y "close"
+        days-before-stale: 1  # Mínimo permitido (1 día)
+        days-before-close: 5  # Cierra el issue/PR después de estar stale por 1 día
